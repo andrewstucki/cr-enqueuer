@@ -14,7 +14,11 @@ spec:
     singular: parent
   scope: Namespaced
   versions:
-  - name: v1alpha1
+  - additionalPrinterColumns:
+    - jsonPath: .status.children
+      name: Children
+      type: integer
+    name: v1alpha1
     schema:
       openAPIV3Schema:
         description: Parent is the Schema for the parents API

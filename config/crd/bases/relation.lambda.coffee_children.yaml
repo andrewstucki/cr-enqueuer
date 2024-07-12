@@ -14,7 +14,11 @@ spec:
     singular: child
   scope: Namespaced
   versions:
-  - name: v1alpha1
+  - additionalPrinterColumns:
+    - jsonPath: .status.bound
+      name: Bound
+      type: boolean
+    name: v1alpha1
     schema:
       openAPIV3Schema:
         description: Child is the Schema for the Childs API
@@ -46,9 +50,6 @@ spec:
             description: ChildStatus defines the observed state of Child
             properties:
               bound:
-                description: |-
-                  INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-                  Important: Run "make" to regenerate code after modifying this file
                 type: boolean
             required:
             - bound

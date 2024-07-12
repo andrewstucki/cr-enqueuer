@@ -33,7 +33,7 @@ type ParentStatus struct {
 
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
-
+// +kubebuilder:printcolumn:name="Children",type="integer",JSONPath=`.status.children`
 // Parent is the Schema for the parents API
 type Parent struct {
 	metav1.TypeMeta   `json:",inline"`

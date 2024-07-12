@@ -30,14 +30,12 @@ type ChildSpec struct {
 
 // ChildStatus defines the observed state of Child
 type ChildStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
 	Bound bool `json:"bound"`
 }
 
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
-
+// +kubebuilder:printcolumn:name="Bound",type="boolean",JSONPath=`.status.bound`
 // Child is the Schema for the Childs API
 type Child struct {
 	metav1.TypeMeta   `json:",inline"`
