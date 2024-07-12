@@ -120,7 +120,7 @@ func (e *lossyEnqueueRequestsFromMapFunc) processNextItem() bool {
 		return true
 	}
 
-	if e.maxRetries != 0 && e.queue.NumRequeues(item) < e.maxRetries {
+	if e.maxRetries <= 0 || e.queue.NumRequeues(item) < e.maxRetries {
 		// retry instead of erroring
 		e.queue.AddRateLimited(item)
 		return true
