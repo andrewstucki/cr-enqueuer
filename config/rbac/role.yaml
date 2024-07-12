@@ -1,0 +1,58 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: manager-role
+rules:
+- apiGroups:
+  - relation.lambda.coffee
+  resources:
+  - children
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - relation.lambda.coffee
+  resources:
+  - children/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - relation.lambda.coffee
+  resources:
+  - children/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - relation.lambda.coffee
+  resources:
+  - parents
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - relation.lambda.coffee
+  resources:
+  - parents/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - relation.lambda.coffee
+  resources:
+  - parents/status
+  verbs:
+  - get
+  - patch
+  - update
