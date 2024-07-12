@@ -14,6 +14,25 @@ import (
 
 type empty struct{}
 
+type ReferenceFunc[T client.Object] func(o T) types.NamespacedName
+type ReferencesFunc[T client.Object] func(o T) []types.NamespacedName
+
+func EnqueueGenericReferences[T client.Object](fn ReferencesFunc[T]) handler.EventHandler {
+	return handler.EnqueueRequestsFromMapFunc(func(ctx context.Context, o client.Object) []reconcile.Request {
+		requests := []reconcile.Request{}
+		for _, nn := range fn(o.(T)) {
+			requests = append(requests, reconcile.Request{NamespacedName: nn})
+		}
+		return requests
+	})
+}
+
+func EnqueueGenericReference[T client.Object](fn ReferenceFunc[T]) handler.EventHandler {
+	return handler.EnqueueRequestsFromMapFunc(func(ctx context.Context, o client.Object) []reconcile.Request {
+		return []reconcile.Request{{NamespacedName: fn(o.(T))}}
+	})
+}
+
 type LossyMapFunc func(context.Context, types.NamespacedName) ([]reconcile.Request, error)
 
 func EnqueueLossyRequestsFromMapFunc(ctx context.Context, maxRetries int, fn LossyMapFunc) handler.EventHandler {
